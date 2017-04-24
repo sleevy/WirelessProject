@@ -22,7 +22,7 @@ public class GameActivity extends AppCompatActivity {
     public static final String ACTION_SEND_DICE_ROLL = "Dice roll";
     private long userId;
     int old;
-    String player;
+    String player, ran, played;
     TextView outText, oldRoll, runner;
 
 
@@ -41,6 +41,7 @@ public class GameActivity extends AppCompatActivity {
         runner = (TextView) findViewById(R.id.textView2);
 
         player = (String) runner.getText();
+        ran = "";
 
 
         old = 0;
@@ -56,6 +57,54 @@ public class GameActivity extends AppCompatActivity {
                 JSONObject json = makeObjectFromRoll(roll);
 
                 old = roll;
+
+                switch(roll)
+                {
+                    case 1:
+                    {
+                        ran = " " + ran;
+                        played = ran + player;
+                        runner.setText(played);
+                        break;
+
+                    }
+                    case 2:
+                    {
+                        ran = "  " + ran;
+                        played = ran + player;
+                        runner.setText(played);
+                        break;
+
+                    }
+                    case 3:
+                    {
+                        ran = "   " + ran;
+                        played = ran + player;
+                        runner.setText(played);
+                        break;
+                    }
+                    case 4:
+                    {
+                        ran = "    " + ran;
+                        played = ran + player;
+                        runner.setText(played);
+                        break;
+                    }
+                    case 5:
+                    {
+                        ran = "     " + ran;
+                        played = ran + player;
+                        runner.setText(played);
+                        break;
+                    }
+                    case 6:
+                    {
+                        ran = "      " + ran;
+                        played = ran + player;
+                        runner.setText(played);
+                        break;
+                    }
+                }
 
                 NetworkConnection.getInstance().setListener(new MyConnectionListener());
                 NetworkConnection.getInstance().broadcastData(json);
