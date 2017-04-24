@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 //            TextView v = (TextView) LayoutInflater.from(parent.getContext())
 //                    .inflate(R.layout.my_text_view, parent, false);
             LinearLayout item = (LinearLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.device_list_item, parent, false);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 150);
             item.setLayoutParams(params);
 
             DeviceViewHolder holder = new DeviceViewHolder(item);
@@ -173,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
         config.wps.setup = WpsInfo.PBC;
 
         manager.connect(channel, config, new MyConnectionListener(this));
+        manager.requestConnectionInfo(channel, new MyConnectionInfoListener());
         //have connection listener do something
     }
 
