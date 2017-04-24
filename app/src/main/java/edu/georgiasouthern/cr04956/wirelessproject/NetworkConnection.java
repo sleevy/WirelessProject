@@ -64,33 +64,62 @@ public class NetworkConnection {
 //    }
 
 
-    public void establishConnection(InetAddress address, NetworkConnectionListener listener) {
+    public void establishConnection(final InetAddress address, NetworkConnectionListener listener) {
 
-        try {
-            Socket socket = new Socket(address, DEFAULT_PORT);
-            socket.setKeepAlive(true);
-            NetworkAsyncTask task = new NetworkAsyncTask(socket);
-            tasks.add(task);
-            task.execute();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
+        AsyncTask<String, Void, Void> makeSocket = new AsyncTask<String, Void, Void>() {
+            NetworkAsyncTask t;
+            @Override
+            protected Void doInBackground(String... params) {
 
+                try {
+                    Socket socket = new Socket(address, DEFAULT_PORT);
+                    socket.setKeepAlive(true);
+                    NetworkAsyncTask task = new NetworkAsyncTask(socket);
+                    tasks.add(task);
+                    t = task;
+//                    task.execute();
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                }
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void result) {
+                t.execute();
+
+            }
+        };
     }
 
     public void listenForConnection() {
 
         //set up server sockets asynchronously... eventually
-        try {
-            ServerSocket sock = new ServerSocket(DEFAULT_PORT);
-            Socket connection = sock.accept();
-            NetworkAsyncTask task = new NetworkAsyncTask(connection);
-            tasks.add(task);
-            task.execute();
 
-        } catch(IOException ioe) {
-            ioe.printStackTrace();
-        }
+
+        AsyncTask<String, Void, Void> makeSocket = new AsyncTask<String, Void, Void>() {
+            NetworkAsyncTask t;
+            @Override
+            protected Void doInBackground(String... params) {
+
+                try {
+                    ServerSocket sock = new ServerSocket(DEFAULT_PORT);
+                    Socket connection = sock.accept();
+                    connection.setKeepAlive(true);
+                    NetworkAsyncTask task = new NetworkAsyncTask(connection);
+                    tasks.add(task);
+                    t = task;
+//                    task.execute();
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                }
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void result) {
+                t.execute();
+
+            }
+        };
     }
 
     public interface NetworkConnectionListener {

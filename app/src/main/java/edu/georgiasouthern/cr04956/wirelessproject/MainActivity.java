@@ -13,6 +13,7 @@ import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private List<WifiP2pDevice> peers = new ArrayList<WifiP2pDevice>();
     private MyPeerListener peerListListener = new MyPeerListener();
     private RecyclerView recycler;
+    private DeviceRecyclerAdapter adapt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,10 @@ public class MainActivity extends AppCompatActivity {
         manager.discoverPeers(channel, new PeerDiscoveryListener(this));
 
         recycler = (RecyclerView) findViewById(R.id.devicesRecycler);
-        recycler.setAdapter(new DeviceRecyclerAdapter());
+        recycler.setLayoutManager(new LinearLayoutManager(this));
+
+        adapt = new DeviceRecyclerAdapter();
+        recycler.setAdapter(adapt);
 
 //        connect();
 
@@ -221,7 +226,11 @@ public class MainActivity extends AppCompatActivity {
             if(!refreshedPeers.equals(peers)) {
                peers.clear();
                 peers.addAll(refreshedPeers);
+
+                adapt.notifyDataSetChanged();
                 recycler.invalidate();
+
+
                 //if adapter view is backed, notify of change
 
             }
