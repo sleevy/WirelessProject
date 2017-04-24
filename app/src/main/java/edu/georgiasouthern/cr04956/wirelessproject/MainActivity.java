@@ -197,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
                 else
                 {
                     //set up outgoing connection. host can send update to peer list and people make connections accordingly?
+                    Toast.makeText(MainActivity.this, info.groupOwnerAddress.toString(), Toast.LENGTH_SHORT).show();
                     Toast.makeText(MainActivity.this, "Not group owner", Toast.LENGTH_SHORT).show();
                     connection.establishConnection(groupOwnerAddress, null);//network connection listener
                 }
