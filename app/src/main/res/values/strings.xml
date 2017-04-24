@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WirelessLab3</string>
+    <string name="app_name">P2P Game</string>
     <string name="title_activity_game">GameActivity</string>
     <string name="roll_button_text">Roll</string>
 </resources>
