@@ -1,6 +1,7 @@
 package edu.georgiasouthern.cr04956.wirelessproject;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,7 +66,7 @@ public class NetworkConnection {
 
 
     public void establishConnection(final InetAddress address, NetworkConnectionListener listener) {
-
+        Log.d("NETWORKCONN","Establish Connection");
         AsyncTask<String, Void, Void> makeSocket = new AsyncTask<String, Void, Void>() {
             NetworkAsyncTask t;
             @Override
@@ -89,9 +90,12 @@ public class NetworkConnection {
 
             }
         };
+
+        makeSocket.execute();
     }
 
     public void listenForConnection() {
+        Log.d("NETWORKCONN","Listen for Connection");
 
         //set up server sockets asynchronously... eventually
 
@@ -103,7 +107,9 @@ public class NetworkConnection {
 
                 try {
                     ServerSocket sock = new ServerSocket(DEFAULT_PORT);
+                    Log.d("CONNECTION ASYNC", "BEFORE ACCEPT");
                     Socket connection = sock.accept();
+                    Log.d("CONNECTION ASYNC", "AFTER ACCEPT");
                     connection.setKeepAlive(true);
                     NetworkAsyncTask task = new NetworkAsyncTask(connection);
                     tasks.add(task);
@@ -117,9 +123,11 @@ public class NetworkConnection {
             @Override
             protected void onPostExecute(Void result) {
                 t.execute();
-
+                Log.d("NETWORK CONN ASYNC", "ON POST EXECUTE");
             }
         };
+
+        makeSocket.execute();
     }
 
     public interface NetworkConnectionListener {

@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         config.wps.setup = WpsInfo.PBC;
 
         manager.connect(channel, config, new MyConnectionListener(this));
-        manager.requestConnectionInfo(channel, new MyConnectionInfoListener());
+//        manager.requestConnectionInfo(channel, new MyConnectionInfoListener());
         //have connection listener do something
     }
 
