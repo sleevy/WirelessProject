@@ -86,7 +86,8 @@ public class NetworkConnection {
             }
             @Override
             protected void onPostExecute(Void result) {
-                t.execute();
+                super.onPostExecute(result);
+                t.execute("");
 
             }
         };
@@ -123,7 +124,7 @@ public class NetworkConnection {
             @Override
             protected void onPostExecute(Void result) {
                 super.onPostExecute(result);
-                t.execute();
+                t.execute("");
                 Log.d("NETWORK CONN ASYNC", "ON POST EXECUTE");
             }
         };
@@ -138,15 +139,19 @@ public class NetworkConnection {
     }
 
     public void broadcastData(JSONObject data) {
+        Log.d("broadcast", "BEFORE LOOP");
         for(NetworkAsyncTask t: tasks) {
 //            t.sendData(data);
             SendDataAsyncTask send = new SendDataAsyncTask(t.getSocket());
             send.execute(data.toString());
+            Log.d("broadcast", "EXECUTED");
+            Log.v("broadcast", data.toString());
         }
 
     }
 
     public void setListener(NetworkConnectionListener listener) {
+
         for(NetworkAsyncTask t: tasks) {
             t.setNetworkConnectionListener(listener);
         }
@@ -163,9 +168,10 @@ public class NetworkConnection {
             super();
             theConnection = conn;
         }
-
+        final String TAG = "SEND ASYNC";
         @Override
         protected Void doInBackground(String... params) {
+            Log.d(TAG, "Do in background");
             try {
                 OutputStreamWriter out = new OutputStreamWriter(theConnection.getOutputStream());
 
@@ -173,6 +179,8 @@ public class NetworkConnection {
 
                 out.write(obj.toString());
                 out.flush();
+
+                Log.d(TAG, "Data Sent");
 
             } catch(IOException ioe) {
                 ioe.printStackTrace();
@@ -183,7 +191,8 @@ public class NetworkConnection {
         }
 
         protected void onPostExecute(Void results) {
-
+            //callback
+            Log.d(TAG, "onPostExecute");
         }
     }
 
