@@ -87,6 +87,7 @@ public class NetworkConnection {
             @Override
             protected void onPostExecute(Void result) {
                 super.onPostExecute(result);
+                if(t != null)
                 t.execute("");
 
             }
@@ -124,6 +125,7 @@ public class NetworkConnection {
             @Override
             protected void onPostExecute(Void result) {
                 super.onPostExecute(result);
+                if(t != null)
                 t.execute("");
                 Log.d("NETWORK CONN ASYNC", "ON POST EXECUTE");
             }
