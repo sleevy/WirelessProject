@@ -81,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, GameActivity.class);
 
                     startActivity(intent);
-                } else {
+                }
+                else {
                     Toast.makeText(MainActivity.this, "You must establish at least one connection first", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -141,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
 
             DeviceViewHolder holder = new DeviceViewHolder(item);
 
-
             return holder;
         }
 
@@ -163,7 +163,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     //@Override
-    public void connect(WifiP2pDevice device) {
+    public void connect(WifiP2pDevice device)
+    {
         //edit to connect to specific ones
         //this could be entirely from the perspective of the client, i think
 //        WifiP2pDevice device = peers.get(0);
@@ -177,19 +178,24 @@ public class MainActivity extends AppCompatActivity {
         //have connection listener do something
     }
 
-    private class MyConnectionInfoListener implements WifiP2pManager.ConnectionInfoListener {
+    private class MyConnectionInfoListener implements WifiP2pManager.ConnectionInfoListener
+    {
 
         @Override
         public void onConnectionInfoAvailable(WifiP2pInfo info) {
             InetAddress groupOwnerAddress = info.groupOwnerAddress;
             NetworkConnection connection = NetworkConnection.getInstance();
 
-            if(info.groupFormed) {
-                if(info.isGroupOwner) {
+            if(info.groupFormed)
+            {
+                if(info.isGroupOwner)
+                {
                     //set up incoming connections with server sockets. Pass to global?
                     Toast.makeText(MainActivity.this, "Group owner", Toast.LENGTH_SHORT).show();
                     connection.listenForConnection();
-                } else {
+                }
+                else
+                {
                     //set up outgoing connection. host can send update to peer list and people make connections accordingly?
                     Toast.makeText(MainActivity.this, "Not group owner", Toast.LENGTH_SHORT).show();
                     connection.establishConnection(groupOwnerAddress, null);//network connection listener
