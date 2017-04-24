@@ -131,6 +131,7 @@ public class NetworkConnection {
         makeSocket.execute();
     }
 
+
     public interface NetworkConnectionListener {
         //some method signature
         public void onReceiveData(JSONObject data);
@@ -138,7 +139,9 @@ public class NetworkConnection {
 
     public void broadcastData(JSONObject data) {
         for(NetworkAsyncTask t: tasks) {
-            t.sendData(data);
+//            t.sendData(data);
+            SendDataAsyncTask send = new SendDataAsyncTask(t.getSocket());
+            send.execute(data.toString());
         }
 
     }
@@ -153,15 +156,50 @@ public class NetworkConnection {
         return tasks.size();
     }
 
+    public class SendDataAsyncTask extends AsyncTask<String, Void, Void> {
+
+        Socket theConnection;
+        public SendDataAsyncTask(Socket conn) {
+            super();
+            theConnection = conn;
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            try {
+                OutputStreamWriter out = new OutputStreamWriter(theConnection.getOutputStream());
+
+                JSONObject obj = new JSONObject(params[0]); //check null
+
+                out.write(obj.toString());
+                out.flush();
+
+            } catch(IOException ioe) {
+                ioe.printStackTrace();
+            } catch(JSONException jsone) {
+                jsone.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Void results) {
+
+        }
+    }
+
     public class NetworkAsyncTask extends AsyncTask<String, Void, Void> {
         private Socket theConnection;
-        private Queue<JSONObject> dataQueue;
+//        private Queue<JSONObject> dataQueue;
         private NetworkConnectionListener listen;
 
         public NetworkAsyncTask(Socket conn) {
             super();
             theConnection = conn;
-            dataQueue = new ConcurrentLinkedQueue<>();
+//            dataQueue = new ConcurrentLinkedQueue<>();
+        }
+
+        public Socket getSocket() {
+            return theConnection;
         }
 
         public void setNetworkConnectionListener(NetworkConnectionListener listener) {
@@ -171,23 +209,19 @@ public class NetworkConnection {
         @Override
         protected Void doInBackground(String[] params) {
             try {
-                OutputStreamWriter out = new OutputStreamWriter(theConnection.getOutputStream());
+
                 BufferedReader reader = new BufferedReader(new InputStreamReader(theConnection.getInputStream()));
+
 
                 while (theConnection.isConnected()) {
                     Log.d("NETWORK ASYNC", "Connection loop");
-                    Log.d("CONNECTION ASYNC", "BEFORE WRITE");
-                    JSONObject obj = dataQueue.poll(); //check null
-                    if (obj != null) {
-                        out.write(obj.toString());
-                        out.flush();
-                    }
 
-                    StringBuilder readContents = new StringBuilder();
-                    String line = "";
+
+
                     Log.d("CONNECTION ASYNC", "BEFORE READ");
-                    if(theConnection.getInputStream().available() > 0) {
-
+//                    if(theConnection.getInputStream().available() > 0) {
+                        StringBuilder readContents = new StringBuilder();
+                        String line = "";
 
                         while ((line = reader.readLine()) != null) {
                             readContents.append(line).append("\n");
@@ -205,7 +239,7 @@ public class NetworkConnection {
                         } catch (JSONException jsone) {
                             jsone.printStackTrace();
                         }
-                    }
+//                    }
 
                     Log.d("CONNECTION ASYNC", "AFTER READ");
 
@@ -220,13 +254,17 @@ public class NetworkConnection {
 
         public void closeConnection() {
             //send "this is closing" message? handle on other end?
-
+            try {
+                theConnection.close();
+            }catch(IOException ioe){
+                ioe.printStackTrace();
+            }
             //close socket
         }
 
-        public void sendData(JSONObject data) {
-            dataQueue.offer(data);
-        }
+//        public void sendData(JSONObject data) {
+//            dataQueue.offer(data);
+//        }
     }
 
 
