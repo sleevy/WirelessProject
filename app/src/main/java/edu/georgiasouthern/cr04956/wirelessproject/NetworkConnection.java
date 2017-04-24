@@ -122,6 +122,7 @@ public class NetworkConnection {
             }
             @Override
             protected void onPostExecute(Void result) {
+                super.onPostExecute(result);
                 t.execute();
                 Log.d("NETWORK CONN ASYNC", "ON POST EXECUTE");
             }
@@ -207,6 +208,11 @@ public class NetworkConnection {
                     }
 
                     Log.d("CONNECTION ASYNC", "AFTER READ");
+                    try {
+                        this.wait(1000);
+                    } catch (InterruptedException ie) {
+                        ie.printStackTrace();
+                    }
                 }
 
 
