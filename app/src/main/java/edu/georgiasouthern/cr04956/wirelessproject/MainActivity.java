@@ -17,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,6 +65,21 @@ public class MainActivity extends AppCompatActivity {
 
 //        connect();
 
+        Button proceedButton = (Button) findViewById(R.id.btnGame);
+        proceedButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                int num = NetworkConnection.getInstance().getNumberOfPeers();
+                if(num > 0) {
+                    Intent intent = new Intent(MainActivity.this, GameActivity.class);
+
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "You must establish at least one connection first", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 

@@ -111,6 +111,10 @@ public class NetworkConnection {
         }
     }
 
+    public int getNumberOfPeers() {
+        return tasks.size();
+    }
+
     public class NetworkAsyncTask extends AsyncTask<String, Void, Void> {
         private Socket theConnection;
         private Queue<JSONObject> dataQueue;
