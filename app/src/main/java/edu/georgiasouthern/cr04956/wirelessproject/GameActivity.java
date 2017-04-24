@@ -22,8 +22,8 @@ public class GameActivity extends AppCompatActivity {
     public static final String ACTION_SEND_DICE_ROLL = "Dice roll";
     private long userId;
     int old;
-    String player, ran, played;
-    TextView outText, oldRoll, runner;
+    String player, ran, played, player2, player3;
+    TextView outText, oldRoll, runner, runner2, runner3;
 
 
 
@@ -39,8 +39,12 @@ public class GameActivity extends AppCompatActivity {
         outText = (TextView) findViewById(R.id.txtDiceRoll);
         oldRoll = (TextView) findViewById(R.id.textView4);
         runner = (TextView) findViewById(R.id.textView2);
+        runner2 = (TextView) findViewById(R.id.textView3);
+        runner3 = (TextView) findViewById(R.id.textView5);
 
         player = (String) runner.getText();
+        player2 = (String) runner2.getText();
+        player3 = (String) runner3.getText();
         ran = "";
 
 
@@ -62,7 +66,7 @@ public class GameActivity extends AppCompatActivity {
                 {
                     case 1:
                     {
-                        ran = " " + ran;
+                        ran = "X" + ran;
                         played = ran + player;
                         runner.setText(played);
                         break;
@@ -70,7 +74,7 @@ public class GameActivity extends AppCompatActivity {
                     }
                     case 2:
                     {
-                        ran = "  " + ran;
+                        ran = "XX" + ran;
                         played = ran + player;
                         runner.setText(played);
                         break;
@@ -78,28 +82,28 @@ public class GameActivity extends AppCompatActivity {
                     }
                     case 3:
                     {
-                        ran = "   " + ran;
+                        ran = "XXX" + ran;
                         played = ran + player;
                         runner.setText(played);
                         break;
                     }
                     case 4:
                     {
-                        ran = "    " + ran;
+                        ran = "XXX" + ran;
                         played = ran + player;
                         runner.setText(played);
                         break;
                     }
                     case 5:
                     {
-                        ran = "     " + ran;
+                        ran = "XXXXX" + ran;
                         played = ran + player;
                         runner.setText(played);
                         break;
                     }
                     case 6:
                     {
-                        ran = "      " + ran;
+                        ran = "XXXXXX" + ran;
                         played = ran + player;
                         runner.setText(played);
                         break;
