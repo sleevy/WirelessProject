@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 //            TextView v = (TextView) LayoutInflater.from(parent.getContext())
 //                    .inflate(R.layout.my_text_view, parent, false);
             LinearLayout item = (LinearLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.device_list_item, parent, false);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             item.setLayoutParams(params);
 
             DeviceViewHolder holder = new DeviceViewHolder(item);
