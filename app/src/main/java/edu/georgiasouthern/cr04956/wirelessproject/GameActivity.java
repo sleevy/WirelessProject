@@ -22,6 +22,8 @@ public class GameActivity extends AppCompatActivity {
     public static final String ACTION_SEND_DICE_ROLL = "Dice roll";
     private long userId;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,7 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
 
@@ -56,7 +59,7 @@ public class GameActivity extends AppCompatActivity {
         public void onReceiveData(JSONObject data) {
             Toast.makeText(GameActivity.this,"Received data" , Toast.LENGTH_SHORT).show();
             //probably isn't in UI thread, so may result in errors. push data into some sort of construct, maybe?
-
+            Toast.makeText(GameActivity.this, data.toString(), Toast.LENGTH_LONG).show();
             //set up asynctask with onPostExecute?
         }
     }

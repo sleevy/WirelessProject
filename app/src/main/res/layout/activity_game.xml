@@ -37,24 +37,20 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         android:layout_marginBottom="86dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
         android:layout_marginLeft="0dp"
-        app:layout_constraintLeft_toLeftOf="@+id/textView3"
         android:layout_marginRight="0dp"
-        app:layout_constraintRight_toRightOf="@+id/textView3"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/txtWhatever"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:layout_marginBottom="166dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnRoll"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/btnRoll"
         android:layout_marginRight="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnRoll"
+        app:layout_constraintLeft_toLeftOf="@+id/btnRoll"
         app:layout_constraintRight_toRightOf="@+id/btnRoll" />
 </android.support.constraint.ConstraintLayout>

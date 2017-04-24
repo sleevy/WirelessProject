@@ -174,6 +174,8 @@ public class NetworkConnection {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(theConnection.getInputStream()));
 
                 while (theConnection.isConnected()) {
+                    Log.d("NETWORK ASYNC", "Connection loop");
+                    Log.d("CONNECTION ASYNC", "BEFORE WRITE");
                     JSONObject obj = dataQueue.poll(); //check null
                     if (obj != null) {
                         out.write(obj.toString());
@@ -182,23 +184,29 @@ public class NetworkConnection {
 
                     StringBuilder readContents = new StringBuilder();
                     String line = "";
-                    while((line = reader.readLine()) != null) {
-                        readContents.append(line).append("\n");
-                    }
-                    //handle contents by sending to listener
-                    try {
-                        JSONObject receiveJSON = new JSONObject(readContents.toString());
-                        if (listen != null){
-                            listen.onReceiveData(receiveJSON);
+                    Log.d("CONNECTION ASYNC", "BEFORE READ");
+                    if(theConnection.getInputStream().available() > 0) {
+
+
+                        while ((line = reader.readLine()) != null) {
+                            readContents.append(line).append("\n");
                         }
-                        else  {
+                        //handle contents by sending to listener
+                        try {
+                            JSONObject receiveJSON = new JSONObject(readContents.toString());
+                            if (listen != null) {
+                                listen.onReceiveData(receiveJSON);
+                            } else {
 
+                            }
+
+
+                        } catch (JSONException jsone) {
+                            jsone.printStackTrace();
                         }
-
-
-                    } catch(JSONException jsone) {
-                        jsone.printStackTrace();
                     }
+
+                    Log.d("CONNECTION ASYNC", "AFTER READ");
                 }
 
 
