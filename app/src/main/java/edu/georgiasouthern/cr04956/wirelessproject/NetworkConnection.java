@@ -208,11 +208,7 @@ public class NetworkConnection {
                     }
 
                     Log.d("CONNECTION ASYNC", "AFTER READ");
-                    try {
-                        this.wait(1000);
-                    } catch (InterruptedException ie) {
-                        ie.printStackTrace();
-                    }
+
                 }
 
 
