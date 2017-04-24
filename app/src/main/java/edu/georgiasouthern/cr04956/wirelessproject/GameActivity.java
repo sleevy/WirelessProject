@@ -60,6 +60,7 @@ public class GameActivity extends AppCompatActivity {
                 outText.setText("Dice roll: " + String.valueOf(roll));
                 JSONObject json = makeObjectFromRoll(roll);
 
+                //Previous roll
                 old = roll;
 
                 switch(roll)
