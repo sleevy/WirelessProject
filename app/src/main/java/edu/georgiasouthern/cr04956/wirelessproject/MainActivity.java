@@ -82,6 +82,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button refreshButton = (Button) findViewById(R.id.btnRefresh);
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                manager.discoverPeers(channel, new PeerDiscoveryListener(MainActivity.this));
+                Toast.makeText(MainActivity.this, "Refreshing peer list", Toast.LENGTH_SHORT);
+            }
+        });
+
     }
 
     private class DeviceOnClickListener implements View.OnClickListener {

@@ -33,4 +33,13 @@
         android:text="Proceed"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/btnRefresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/txtDevicesListTitle"
+        android:layout_marginEnd="15dp"
+        android:text="Refresh" />
 </RelativeLayout>
