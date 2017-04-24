@@ -136,7 +136,8 @@ public class MainActivity extends AppCompatActivity {
 //            TextView v = (TextView) LayoutInflater.from(parent.getContext())
 //                    .inflate(R.layout.my_text_view, parent, false);
             LinearLayout item = (LinearLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.device_list_item, parent, false);
-
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40);
+            item.setLayoutParams(params);
 
             DeviceViewHolder holder = new DeviceViewHolder(item);
 
@@ -185,9 +186,11 @@ public class MainActivity extends AppCompatActivity {
             if(info.groupFormed) {
                 if(info.isGroupOwner) {
                     //set up incoming connections with server sockets. Pass to global?
+                    Toast.makeText(MainActivity.this, "Group owner", Toast.LENGTH_SHORT).show();
                     connection.listenForConnection();
                 } else {
                     //set up outgoing connection. host can send update to peer list and people make connections accordingly?
+                    Toast.makeText(MainActivity.this, "Not group owner", Toast.LENGTH_SHORT).show();
                     connection.establishConnection(groupOwnerAddress, null);//network connection listener
                 }
             } else {
