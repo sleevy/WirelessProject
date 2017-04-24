@@ -80,5 +80,5 @@ public class GameActivity extends AppCompatActivity {
         return json;
     }
 
-    
+
 }
