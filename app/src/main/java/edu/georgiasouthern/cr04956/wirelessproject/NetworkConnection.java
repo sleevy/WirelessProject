@@ -43,7 +43,7 @@ public class NetworkConnection {
 //        addresses = new ArrayList<>();
 //        outgoing = new ArrayList<>();
 //        incoming = new ArrayList<>();
-
+        tasks = new ArrayList<>();
     }
 
     public static NetworkConnection getInstance() {
