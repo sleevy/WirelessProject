@@ -48,7 +48,7 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                //roll dice
+                //roll the dice
                 oldRoll.setText("Previous roll: " + old);
 
                 int roll = rollDice(6);
