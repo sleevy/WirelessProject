@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -204,7 +205,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onPeersAvailable(WifiP2pDeviceList peerList) {
-            List<WifiP2pDevice> refreshedPeers = (List<WifiP2pDevice>) peerList.getDeviceList();
+
+            Collection<WifiP2pDevice> refreshedPeers =  peerList.getDeviceList();
+
             if(!refreshedPeers.equals(peers)) {
                peers.clear();
                 peers.addAll(refreshedPeers);
