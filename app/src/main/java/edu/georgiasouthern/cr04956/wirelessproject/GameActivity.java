@@ -21,6 +21,9 @@ public class GameActivity extends AppCompatActivity {
     Random randy;
     public static final String ACTION_SEND_DICE_ROLL = "Dice roll";
     private long userId;
+    int old;
+    String player, ran, played;
+    TextView outText, oldRoll, runner;
 
 
 
@@ -33,15 +36,75 @@ public class GameActivity extends AppCompatActivity {
         userId = randy.nextLong();
 
         Button btnRoll = (Button) findViewById(R.id.btnRoll);
-        final TextView outText = (TextView) findViewById(R.id.txtDiceRoll);
+        outText = (TextView) findViewById(R.id.txtDiceRoll);
+        oldRoll = (TextView) findViewById(R.id.textView4);
+        runner = (TextView) findViewById(R.id.textView2);
+
+        player = (String) runner.getText();
+        ran = "";
+
+
+        old = 0;
         btnRoll.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 //roll dice
+                oldRoll.setText("Previous roll: " + old);
+
                 int roll = rollDice(6);
-                outText.setText(String.valueOf(roll));
+                outText.setText("Dice roll: " + String.valueOf(roll));
                 JSONObject json = makeObjectFromRoll(roll);
+
+                old = roll;
+
+                switch(roll)
+                {
+                    case 1:
+                    {
+                        ran = " " + ran;
+                        played = ran + player;
+                        runner.setText(played);
+                        break;
+
+                    }
+                    case 2:
+                    {
+                        ran = "  " + ran;
+                        played = ran + player;
+                        runner.setText(played);
+                        break;
+
+                    }
+                    case 3:
+                    {
+                        ran = "   " + ran;
+                        played = ran + player;
+                        runner.setText(played);
+                        break;
+                    }
+                    case 4:
+                    {
+                        ran = "    " + ran;
+                        played = ran + player;
+                        runner.setText(played);
+                        break;
+                    }
+                    case 5:
+                    {
+                        ran = "     " + ran;
+                        played = ran + player;
+                        runner.setText(played);
+                        break;
+                    }
+                    case 6:
+                    {
+                        ran = "      " + ran;
+                        played = ran + player;
+                        runner.setText(played);
+                        break;
+                    }
+                }
 
                 NetworkConnection.getInstance().setListener(new MyConnectionListener());
                 NetworkConnection.getInstance().broadcastData(json);
@@ -56,7 +119,8 @@ public class GameActivity extends AppCompatActivity {
     private class MyConnectionListener implements NetworkConnection.NetworkConnectionListener {
 
         @Override
-        public void onReceiveData(JSONObject data) {
+        public void onReceiveData(JSONObject data)
+        {
             Toast.makeText(GameActivity.this,"Received data" , Toast.LENGTH_SHORT).show();
             //probably isn't in UI thread, so may result in errors. push data into some sort of construct, maybe?
             Toast.makeText(GameActivity.this, data.toString(), Toast.LENGTH_LONG).show();
