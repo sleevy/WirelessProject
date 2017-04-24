@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
+import static android.R.attr.x;
 
 /**
  * Created by Cameron Rhodes on 4/23/2017.
@@ -86,6 +89,7 @@ public class NetworkConnection {
             }
             @Override
             protected void onPostExecute(Void result) {
+                Log.d("establish async", "onPostExecute");
                 super.onPostExecute(result);
                 if(t != null)
                 t.execute("");
@@ -221,38 +225,60 @@ public class NetworkConnection {
         protected Void doInBackground(String[] params) {
             try {
 
-                BufferedReader reader = new BufferedReader(new InputStreamReader(theConnection.getInputStream()));
+                //BufferedReader reader = new BufferedReader(new InputStreamReader(theConnection.getInputStream()));
 
-
+                InputStream stream = theConnection.getInputStream();
                 while (theConnection.isConnected()) {
+                  if(stream.available() > 0) {
+                      byte[] bytes = new byte[stream.available()];
+
+                      int res = stream.read(bytes);
+
+                      StringBuilder build = new StringBuilder();
+
+                      build.append(new String(bytes));
+
+                      try {
+                          JSONObject receiveJSON = new JSONObject(build.toString());
+                          if (listen != null) {
+                              listen.onReceiveData(receiveJSON);
+                          } else {
+
+                          }
+
+
+                      } catch (JSONException jsone) {
+                          jsone.printStackTrace();
+                      }
+                  }
                     Log.d("NETWORK ASYNC", "Connection loop");
 
 
 
-                    Log.d("CONNECTION ASYNC", "BEFORE READ");
+//                    Log.d("CONNECTION ASYNC", "BEFORE READ");
 //                    if(theConnection.getInputStream().available() > 0) {
-                        StringBuilder readContents = new StringBuilder();
-                        String line = "";
-
-                        while ((line = reader.readLine()) != null) {
-                            readContents.append(line).append("\n");
-                        }
+//                        StringBuilder readContents = new StringBuilder();
+//                        String line = "";
+//
+//                        while ((line = reader.readLine()) != null) {
+//                            readContents.append(line).append("\n");
+//                        }
                         //handle contents by sending to listener
-                        try {
-                            JSONObject receiveJSON = new JSONObject(readContents.toString());
-                            if (listen != null) {
-                                listen.onReceiveData(receiveJSON);
-                            } else {
-
-                            }
-
-
-                        } catch (JSONException jsone) {
-                            jsone.printStackTrace();
-                        }
+//                        try {
+//                            JSONObject receiveJSON = new JSONObject(readContents.toString());
+//                            if (listen != null) {
+//                                listen.onReceiveData(receiveJSON);
+//                            } else {
+//
+//                            }
+//
+//
+//                        } catch (JSONException jsone) {
+//                            jsone.printStackTrace();
+//                        }
 //                    }
 
-                    Log.d("CONNECTION ASYNC", "AFTER READ");
+//                    Log.d("CONNECTION ASYNC", "AFTER READ");
 
                 }
 
