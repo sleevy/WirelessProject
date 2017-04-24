@@ -40,7 +40,7 @@ public class GameActivity extends AppCompatActivity {
         oldRoll = (TextView) findViewById(R.id.textView4);
         runner = (TextView) findViewById(R.id.textView2);
 
-        //player = (String) runner.getText();
+        player = (String) runner.getText();
 
 
         old = 0;
